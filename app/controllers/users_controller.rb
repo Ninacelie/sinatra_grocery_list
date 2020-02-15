@@ -35,4 +35,35 @@ class UsersController < ApplicationController
         erb :signup 
     end
 
+    post '/users' do
+    # create a new user here and add to db
+    # user must have name, email, and password
+        @user = User.new(params) 
+    # now have ActiveRecord validations within User model class vs
+    # just checking params keys to have values 
+        if @user.save
+            session[:user_id] = @user.id 
+    # go to user show page 
+            flash [:message] = "You have successfully created an account, #{@user.name}! Welcome!"
+            redirect "/users/#{@user.id}"
+        else
+    # not valid input tell user not valid
+            flash[:error] = "Account creation failure: #{@user.errors.full_messages.to_sentence}"
+            redirect '/signup'
+        end 
+    end
+
+    # user SHOW route
+    get '/users/:id' do
+        @user = User.find_by(id: params[:id])
+        redirect_if_logged_in
+
+        erb :'users/show'
+    end
+
+    get '/logout' do
+        session.clear
+        redirect '/'
+    end
+
 end 
