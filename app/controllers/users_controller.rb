@@ -1,16 +1,14 @@
 class UsersController < ApplicationController
-    # gives this class access to everything in applicationcontroller inherits
+    # inherits all methods from AC
 
-    # create login route, to show them the login page (render login form)
-    get '/login' do
+    
+    get '/login' do # renders / shows login form
         erb :login 
     end
 
-    # post is a sinatra method, to recieve the login form, 
-    # find the user and log the user in (create a session)
-    post '/login' do #findby finds key value pair
+    post '/login' do 
         # find user
-        # authenticate user 
+        # authenticate user + log them in, post receives form
         @user = User.find_by(email: params[:email])
         if @user.authenticate(params[:password]) 
         # if user is authentic, log that user in
@@ -24,8 +22,8 @@ class UsersController < ApplicationController
         end 
     end
 
-    # create signup, renders signup form
-    get '/signup' do
+    
+    get '/signup' do # create signup, renders signup form
         erb :signup # renders a view, signup bc not nested, can do just signup
     end
 
@@ -34,6 +32,7 @@ class UsersController < ApplicationController
     # user must have name, email, and password
         if params[:name] != "" && params[:email] != "" && params[:password] != ""
             @user = User.create(params)
+            session[:user_id] = @user.id # logging user in 
     # go to user show page 
             redirect "/users/#{@user.id}" # interpolate bc its a string
     # redirect not render bc need to go to new route 
@@ -47,7 +46,6 @@ class UsersController < ApplicationController
     get '/users/:id' do # :id is dynamic, it can change 
         @user = User.find_by(id: params[:id])
         #redirect_if_logged_in
-
         erb :'users/show'
     end
 
