@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20200212164548) do
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.string   "password_digest"
+    t.string   "password_digest" #digest bc using bcrypt 
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end

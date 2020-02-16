@@ -16,35 +16,34 @@ class ApplicationController < Sinatra::Base
 
   helpers do 
 
-  def logged_in?
-# true if user is logged in, otherwise false
-    !!current_user 
-  end 
+    def logged_in? #boolean method
+    # true if user is logged in, otherwise false
+      !!current_user #double bang !! 
+    end 
 
-  def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
-  end 
+    def current_user #find by AR method 
+      @current_user ||= User.find_by(id: session[:user_id])
+    end 
 
-  def authorized_to_edit?(journal_entry)
-    journal_entry.user == current_user 
-  end 
+    def authorized_to_edit?(journal_entry)
+      journal_entry.user == current_user 
+    end 
 
-# use this helper method to protect controller actions where user must be logged in to proceed
-  def redirect_if_not_logged_in
-    if !logged_in?
-      # flash[:errors] = "You must be logged in to view the page you tried to view."
-      redirect '/'
+    # use this helper method to protect controller actions where user must be logged in to proceed
+    def redirect_if_not_logged_in
+      if !logged_in?
+        redirect '/'
+      end
     end
-  end
 
-# use this helper method to avoid showing welcome, login, or signup page to a user that's already logged in
-  def redirect_if_logged_in
-    if logged_in?
+    # use this helper method to avoid showing welcome, login, or signup page to a user that's already logged in
+    def redirect_if_logged_in
+      if logged_in?
       redirect "/users/#{current_user.id}"
+      end
     end
-  end
 
-end 
+  end 
 
 end
 
