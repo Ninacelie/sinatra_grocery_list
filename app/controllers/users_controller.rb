@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
     # inherits all methods from AC
-
     
     get '/login' do # renders / shows login form
         erb :login 

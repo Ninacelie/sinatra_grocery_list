@@ -7,6 +7,6 @@ end
 #in order to send PATCH and DELETE requests, add a line of code here:
 # use Rack:MethodOverride 
 
-use UsersController #mount the userscontroller 
+use UsersController #mount the controllers
 use GroceryListsController
 run ApplicationController

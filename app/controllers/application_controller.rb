@@ -10,8 +10,12 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
-    erb :welcome 
-  end
+    if logged_in?
+      redirect "/users/#{current_user.id}"
+    else 
+      erb :welcome 
+    end
+  end 
 
   helpers do 
 
@@ -24,25 +28,6 @@ class ApplicationController < Sinatra::Base
       @current_user ||= User.find_by(id: session[:user_id])
     end 
 
-    def authorized_to_edit?(journal_entry)
-      journal_entry.user == current_user 
-    end 
-
-    # use this helper method to protect controller actions where user must be logged in to proceed
-    def redirect_if_not_logged_in
-      if !logged_in?
-        redirect '/'
-      end
-    end
-
-    # use this helper method to avoid showing welcome, login, or signup page to a user that's already logged in
-    def redirect_if_logged_in
-      if logged_in?
-      redirect "/users/#{current_user.id}"
-      end
-    end
-
   end 
 
-end
-
+end 
