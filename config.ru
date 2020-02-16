@@ -5,8 +5,8 @@ if ActiveRecord::Migrator.needs_migration?
 end
 
 #in order to send PATCH and DELETE requests, add a line of code here:
-#use Rack:MethodOverride 
-#where I'll mount other controllers with 'use'
+# use Rack:MethodOverride 
 
 use UsersController #mount the userscontroller 
+use GroceryListsController
 run ApplicationController

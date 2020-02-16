@@ -12,22 +12,21 @@ class UsersController < ApplicationController
     post '/login' do #findby finds key value pair
         # find user
         # authenticate user 
-        @user = user.find_by(email: params[:email])
+        @user = User.find_by(email: params[:email])
         if @user && @user.authenticate(params[:password]) 
         # log that user in
         # create users session 
             session[:user_id] = @user.id # actually logging in
         # then redirect to user's show page
-            flash[:message] = "Welcome, #{@user.name}!"
+            # flash[:message] = "Welcome, #{@user.name}!"
             redirect "users/#{@user.id}"
         else 
         # tell user invalid credentials
-            flash[:error] = "Your credentials were invalid. Please sign up or try again."
+            # flash[:error] = "Your credentials were invalid. Please sign up or try again."
         # redirect to login page
             redirect '/login'
         end 
     end
-
 
 # create signup, renders signup form
     get '/signup' do
@@ -44,11 +43,11 @@ class UsersController < ApplicationController
         if @user.save
             session[:user_id] = @user.id 
     # go to user show page 
-            flash [:message] = "You have successfully created an account, #{@user.name}! Welcome!"
+            # flash[:message] = "You have successfully created an account, #{@user.name}! Welcome!"
             redirect "/users/#{@user.id}"
         else
     # not valid input tell user not valid
-            flash[:error] = "Account creation failure: #{@user.errors.full_messages.to_sentence}"
+            # flash[:error] = "Account creation failure: #{@user.errors.full_messages.to_sentence}"
             redirect '/signup'
         end 
     end
@@ -56,12 +55,12 @@ class UsersController < ApplicationController
     # user SHOW route
     get '/users/:id' do
         @user = User.find_by(id: params[:id])
-        redirect_if_logged_in
+        #redirect_if_logged_in
 
         erb :'users/show'
     end
 
-    get '/logout' do
+    post '/logout' do
         session.clear
         redirect '/'
     end
