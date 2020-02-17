@@ -1,7 +1,12 @@
 <h2><%= @user.name %>'s Grocery Lists</h2>
 <h5> <ul> 
 <% @user.grocery_lists.each do |grocery| %>
-<li><%= grocery.content %></li>
+
+
+<li><%= grocery.content %></li> 
+<a href="/grocery_lists/<%= grocery.id %>/edit">Edit List</a> 
+<a href="/grocery_lists/<%= grocery.id %>/delete">Delete List</a>
+
 <%end%> </ul>
 
 <form class="" action="/logout" method="post">

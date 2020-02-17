@@ -18,13 +18,26 @@ class GroceryListsController < ApplicationController
         end
     end 
 
-    get '/grocery_lists/:id' do # show route for new list
-        @grocery_list = GroceryList.find(params[:id])
-        erb :'grocery_lists/show'
+    get '/grocery_lists/:id/edit' do # this route sends us to edit.erb 
+        set_grocery_list
+        erb :'grocery_lists/edit' # renders an edit form
     end
 
-    get '/grocery_lists/:id/edit' do
-        erb :'grocery_lists/edit'
+    patch '/grocery_lists/:id/edit' do # edits and saves the list 
+        set_grocery_list
+        @grocery_list.content = params[:content]
+        @grocery_list.save
+        user_id = session[:user_id]
+        redirect "users/#{user_id}"
+    end 
+
+    get '/grocery_lists/:id/delete' do
+        
     end
 
+    private
+
+    def set_grocery_list # used multiple time so defined special method 
+        @grocery_list = GroceryList.find(params[:id]) 
+    end 
 end 
