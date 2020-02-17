@@ -30,13 +30,13 @@ class UsersController < ApplicationController
     # create a new user here and add to db
     # user must have name, email, and password
         if params[:name] != "" && params[:email] != "" && params[:password] != ""
-            if User.find_by(email: params[:email]) == nil 
+            if User.find_by(email: params[:email]) == nil # if nil user exists
                 @user = User.create(params)
                 session[:user_id] = @user.id # logging user in 
                 # go to user show page 
                 redirect "/users/#{@user.id}" # interpolate bc its a string
             else
-                redirect '/'
+                redirect '/' # redirect if email already exists
             end 
             # redirect not render bc need to go to new route 
         else
