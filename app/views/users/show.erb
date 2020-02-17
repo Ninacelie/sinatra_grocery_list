@@ -5,10 +5,12 @@
 
 <li><%= grocery.content %></li> 
 <a href="/grocery_lists/<%= grocery.id %>/edit">Edit List</a> 
-<a href="/grocery_lists/<%= grocery.id %>/delete">Delete List</a>
 
+<form class= "" action="/grocery_lists/<%= grocery.id %>/delete" method="post">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" name="" value="Delete"> </form> 
 <%end%> </ul>
-
+<br><br><br>
 <form class="" action="/logout" method="post">
     <input type="submit" value="Logout">
 </form>

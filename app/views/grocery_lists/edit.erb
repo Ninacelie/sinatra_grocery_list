@@ -1,7 +1,6 @@
 <h2>Edit List: </h2>
 
 <form class="" action="/grocery_lists/<%= @grocery_list.id %>/edit" method="post">
-  <input type="hidden" name="_method" value="patch">
   <label for="content">Content:</label>
   <textarea name="content" style="width:auto; height:auto;"><%= @grocery_list.content %></textarea>
   <input type="submit" name="" value="Edit List">

@@ -30,13 +30,17 @@ class UsersController < ApplicationController
     # create a new user here and add to db
     # user must have name, email, and password
         if params[:name] != "" && params[:email] != "" && params[:password] != ""
-            @user = User.create(params)
-            session[:user_id] = @user.id # logging user in 
-    # go to user show page 
-            redirect "/users/#{@user.id}" # interpolate bc its a string
-    # redirect not render bc need to go to new route 
+            if User.find_by(email: params[:email]) == nil 
+                @user = User.create(params)
+                session[:user_id] = @user.id # logging user in 
+                # go to user show page 
+                redirect "/users/#{@user.id}" # interpolate bc its a string
+            else
+                redirect '/'
+            end 
+            # redirect not render bc need to go to new route 
         else
-    # not valid input tell user not valid
+            # not valid input tell user not valid
             redirect '/signup'
         end 
     end
@@ -44,8 +48,12 @@ class UsersController < ApplicationController
     # user SHOW route
     get '/users/:id' do # :id is dynamic, it can change 
         @user = User.find_by(id: params[:id])
+        if @user == current_user # user can only view their show page 
         #redirect_if_logged_in
-        erb :'users/show'
+            erb :'users/show'
+        else
+            redirect '/'
+        end 
     end
 
     post '/logout' do
