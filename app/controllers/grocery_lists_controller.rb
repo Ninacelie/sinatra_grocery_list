@@ -1,6 +1,6 @@
 class GroceryListsController < ApplicationController 
 
-    get '/grocery_lists/index' do 
+    get '/grocery_lists' do 
         redirect_to_login 
         @grocery_lists = GroceryList.all 
         erb :'grocery_lists/index' 
