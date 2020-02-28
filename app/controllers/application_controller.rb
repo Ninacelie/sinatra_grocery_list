@@ -2,7 +2,7 @@ require './config/environment'
 
 class ApplicationController < Sinatra::Base
 
-  configure do # configure settings
+  configure do 
     set :public_folder, 'public'
     set :views, 'app/views'
     enable :sessions 
@@ -19,12 +19,11 @@ class ApplicationController < Sinatra::Base
 
   helpers do 
 
-    def logged_in? #boolean method
-    # true if user is logged in, otherwise false
-      !!current_user #double bang !! 
+    def logged_in? 
+      !!current_user 
     end 
 
-    def current_user #find by AR method 
+    def current_user 
       @current_user ||= User.find_by(id: session[:user_id])
     end 
 

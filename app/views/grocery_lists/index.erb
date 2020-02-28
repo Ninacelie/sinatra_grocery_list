@@ -1,7 +1,7 @@
 
-<% @grocery_lists.each do |list| %>
-    <h5><%= list.created_at %></h5>
-    <p><%= list.content %></p>
+<% @grocery_lists.each do |i| %>
+    <h5><%= i.created_at %></h5>
+    <p><%= i.content %></p>
 <% end %>
 
 <form class="" action="/logout" method="post">

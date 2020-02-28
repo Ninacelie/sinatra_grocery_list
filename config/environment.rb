@@ -10,7 +10,3 @@ ActiveRecord::Base.establish_connection(
 
 require './app/controllers/application_controller'
 require_all 'app'
-
-#This is the file that allows your applications components the ability 
-#to communicate with one another. It is extremely useful for debugging 
-#and is a must for running Sinatra.
