@@ -1,0 +1,12 @@
+
+<% @grocery_lists.each do |list| %>
+    <h5><%= list.created_at %></h5>
+    <p><%= list.content %></p>
+<% end %>
+
+<form class="" action="/logout" method="post">
+    <input type="submit" value="Logout">
+</form>
+<form class="" action="/grocery_lists/new" method="get">
+    <input type="submit" value="Create List">
+</form>

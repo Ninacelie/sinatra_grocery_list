@@ -1,13 +1,17 @@
 class GroceryListsController < ApplicationController 
 
+    get '/grocery_lists/index' do # renders a page to see all lists
+        redirect_to_login # redirect is nobody is logged in
+        @grocery_lists = GroceryList.all 
+        erb :'grocery_lists/index' # render index page
+    end 
+
     get '/grocery_lists/new' do # renders a form to create a list
         erb :'grocery_lists/new'
     end
 
     post '/grocery_lists' do # creates the new list 
-        if !logged_in? 
-            redirect'/' 
-        end # only save if it has content
+        redirect_to_login
         if params[:content] != ""
             # create a new list
             @grocery_list = GroceryList.create(content: params[:content], user_id: current_user.id)
@@ -20,11 +24,11 @@ class GroceryListsController < ApplicationController
     get '/grocery_lists/:id/edit' do # this route sends us to edit.erb 
         set_grocery_list
         redirect_to_login 
-            if @grocery_list.user == current_user 
-                erb:'grocery_lists/edit' # renders edit form 
-            else
-                redirect "users/#{current_user.id}" # go back to users home page
-            end 
+        if @grocery_list.user == current_user 
+            erb:'grocery_lists/edit' # renders edit form 
+        else
+            redirect "users/#{current_user.id}" # go back to users home page
+        end 
     end  
 
     post '/grocery_lists/:id/edit' do # edits and saves the list 
