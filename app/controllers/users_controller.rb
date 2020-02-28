@@ -8,7 +8,10 @@ class UsersController < ApplicationController
     post '/login' do 
         # find user
         # authenticate user + log them in, post receives form
-        @user = User.find_by(email: params[:email])
+        @user = User.find_by(email: params[:email]) 
+        if @user == nil 
+            redirect '/login' 
+        end  
         if @user.authenticate(params[:password]) 
         # if user is authentic, log that user in
         # create users session, session is had, :user_id is key
